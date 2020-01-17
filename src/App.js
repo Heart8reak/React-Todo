@@ -12,12 +12,13 @@ class App extends React.Component {
   // design `App` to be the parent component of your application.
   // this component is going to take care of state, and any change handlers you need to work with your state
 
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       taskData: data,
-      newList: ""
+      // newList: ""
     }
+    // console.log("data", data)
   }
 
   addNewItem = newItemTask => {
@@ -26,41 +27,45 @@ class App extends React.Component {
       ...this.state,
       taskData: [
         ...this.state.taskData,
-        { task: newItemTask, completed: false, id: Date.now() }
+        { task: newItemTask, id: Date.now(), completed: false }
       ]
     };
-    console.log(newState)
+    // console.log(newState)
     this.setState(newState)
-    console.log(this.state)
+    // console.log(this.state)
   }
 
-  toggleCompleted = (e, id) => {
-    e.preventDefault();
-    console.log("index.js: App: toggleCompleted: id: ", id)
-    const newState = {
-      ...this.state,
-      newList: this.state.taskData.map(item => {
-        if (item.id === id) {
-          return {
-            ...item,
-            completed: !item.completed
-          }
-        }
+  toggleCompleted = id => {
+    // e.preventDefault();
+    // console.log("index.js: App: toggleCompleted: id: ", id)
+    const newTaskData = this.state.taskData.map(item => {
+      console.log('item.id', item.id)
+      if (item.id === id) {
+        return {
+          ...item,
+          completed: !item.completed
+        };
+      } else {
         return item;
-      })
-    }
-    this.setState(newState);
-  };
+      }
+    })
+    this.setState({
+      taskData: newTaskData
+    });
+    console.log(newTaskData)
+  }
 
-  clearCompleted = () => {
+  clearCompleted = id => {
     const newState = {
-      ...this.state,
-      newList: this.state.newList.filter(item => {
-        return !item.completed;
+      ...this.state({
+        taskData: this.state.taskData.filter(item => {
+          return !item.completed === false;
+        })
       })
-    }
+    };
     this.setState(newState)
   }
+
   render() {
     console.log("rendering...")
     return (
@@ -80,5 +85,4 @@ class App extends React.Component {
     );
   }
 }
-
 export default App;
