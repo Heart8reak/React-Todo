@@ -55,12 +55,11 @@ class App extends React.Component {
     console.log(newTaskData)
   }
 
-  clearCompleted = id => {
+  clearCompleted = () => {
     const newState = {
-      ...this.state({
-        taskData: this.state.taskData.filter(item => {
-          return !item.completed === false;
-        })
+      ...this.state,
+      taskData: this.state.taskData.filter(item => {
+        return !item.completed;
       })
     };
     this.setState(newState)
