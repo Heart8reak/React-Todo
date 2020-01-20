@@ -1,4 +1,0 @@
-[build]
-base = "react-todo"
-publish = "react-todo/build"
-command = "yarn build"
